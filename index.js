@@ -21,12 +21,13 @@ exports.handler = async (event) => {
         
         let body = JSON.parse(event.body)
 
+        // Destino y/o email faltantes en el body
         if (!body.destino || !body.email) {
             return {
                 statusCode: 400,
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({
-                    message: "Los siguientes datos son necesarios",
+                    message: "Destino y email son necesarios.",
                     example: {
                         destino: "Mendoza",
                         email: "user@mail.com"
@@ -62,6 +63,7 @@ exports.handler = async (event) => {
 
     }
 
+    // Listar envios pendientes
     else if (event.path === '/envios/pendientes' && event.httpMethod === 'GET') {
         let params = {
             TableName: 'Envio',
@@ -86,6 +88,7 @@ exports.handler = async (event) => {
 
     }
 
+    // Actulizar envio eliminando atributo pendiente
     else if (event.path === `/envios/${event.pathParameters.idEnvio}/entregado` && event.httpMethod === 'PUT') {
         const idEnvio = (event.pathParameters || {}).idEnvio || false;
         let params = {
@@ -103,7 +106,7 @@ exports.handler = async (event) => {
             return {
                 statusCode: 200,
                 headers: { "content-type": "text/plain" },
-                body: `Envio id: ${idEnvio} fue entregado.`
+                body: `El envio id: ${idEnvio} fue entregado.`
             };
         } catch {
             return {
