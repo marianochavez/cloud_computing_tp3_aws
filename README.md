@@ -17,3 +17,20 @@ Proyecto creado en Node utilizando AWS DynamoDB, AWS Lambda y AWS API Gateway
     npm install
     node CreateTable.js
     sam local start-api --docker-network awslocal
+
+### Crear envió
+	POST /envios HTTP/1.1
+	Host: localhost:3000
+	Content-Type: application/json
+	{
+	    "destino": "Salta",
+	    "email": "user@exmail.com"
+	}
+	
+### Listar envíos pendientes
+	GET /envios/pendientes HTTP/1.1
+	Host: localhost:3000
+	
+### Enviar pedido
+	PUT /envios/{idEnvio}/entregado HTTP/1.1
+	Host: localhost:3000
